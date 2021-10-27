@@ -1,12 +1,9 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
-const anqp = require('anqplib/callback_api');
 const app = express();
 const port = 3333;
 
-app.get('/', (req, res) => res.send('TUDO FUNCIONADNO!'));
-
-app.get('/send', (req, res) => res.send('TUDO FUNCIONADNO!'));
+app.get('/', (req, res) => res.send('Servidor ligado!'));
 
 app.listen(port, (err) => {
   console.log(`Server is listening on ${port}.`);
@@ -21,7 +18,7 @@ let transporter = nodemailer.createTransport({
 });
 
 let numero = 587615274;
-let valor = 5000;
+let valor = 3000;
 let data = '26/10/2021';
 
 const mailOptions = {
@@ -36,6 +33,7 @@ const mailOptions = {
   Para isso, acesse as configurações do gmail aqui . 
 */
 
+// ENVIAR EMAIL
 transporter.sendMail(mailOptions, (err, info) => {
   if (err) console.log(err);
   else console.log(info);
