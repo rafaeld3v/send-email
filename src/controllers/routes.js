@@ -7,10 +7,7 @@ const text = {
     text: 'Trabalho AV2',
     user1: 'Emanuelle Neves',
     user2: 'Rafael Tavares',
-    user3: 'Matheus Rodrigues',
     user4: 'Dante Dantas',
-    user5: 'João Monteiro',
-
 }
 
 routes.get('/', (req, res) => res.send(text));
