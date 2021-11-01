@@ -12,8 +12,8 @@ app.listen(port, (err) => {
 let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'rafaeld3v@edu.unifor.br',
-    pass: '55082001',
+    user: 'example@gmail.com', // mudar email
+    pass: 'senha', // mudar senha
   },
 });
 
