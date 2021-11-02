@@ -13,17 +13,9 @@
             <form method="post" action="/sendEmail" autocomplete="off">
                 <p>Por favor, insira os dados do pedido</p>
                 <input name="emailClient" type="text" placeholder="mail.example.com" required autofocus />
-                <input name="numero" type="number" placeholder="0000" required autofocus />
-                <input name="valor" type="number" placeholder="00.0" required autofocus />
-                <input name="data" type="date" placeholder="00/00/0000" required autofocus />
 
                 <button type="submit" cursor="pointer">Submit</button>
             </form>
-            <div>
-                <% if(dataEmail) { %>
-                   <p>Dados enviado com sucesso!</p>
-                <% } %>
-            </div>
         </div>
     </main>
 </body>

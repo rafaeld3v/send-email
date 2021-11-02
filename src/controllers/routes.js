@@ -1,5 +1,7 @@
 const express = require('express');
-const {sendEmail} = require('../data/data');
+const {sendEmail} = require('../data/sendEmail');
+const {receiveMessage} = require('../data/receiveMessage');
+const {sendMessage} = require('../data/sendMessage');
 
 const routes = express.Router();
 
@@ -13,23 +15,42 @@ const text = {
 routes.get('/', (req, res) => res.send(text));
 
 // Envie um e-mail com no formato abaixo utilizando as informações coletadas;
-routes.get('/sendEmail', (req, res) => res.render('home', {dataEmail: null}));
+routes.get('/receiveMessage', (req, res) => res.render('pedido'));
 
-routes.post('/sendEmail', (req, res) => {
-    const {emailClient} = req.body; 
+routes.post('/receiveMessage', (req, res) => {
     const {numero} = req.body;
     const {valor} = req.body;
     const {data} = req.body;
 
-    const dataEmail = sendEmail(emailClient, parseInt(numero), parseFloat(valor), data);
-    // console.log(emailClient, numero, valor, data);
-
-    return res.status(200).json({ message: 'Email enviado com sucesso!', dataEmail });
+    const pedido = sendMessage(parseInt(numero), parseFloat(valor), data);
+    
+    try {
+        return res.status(200).json({ message: 'Pedido cadastrado com sucesso!', pedido});
+    } 
+    catch (error){
+        if (error instanceof Error) {
+            return res.status(400).json({ message: 'Pedido não cadastrado!' });
+        }
+    }
 });
 
+
 //  Envie uma mensagem com um número do pedido e o valor;
-routes.post('/messagePedido', (req, res) => {
+routes.get('/sendEmail', (req, res) => res.render('email'));
+
+routes.post('/sendEmail', (req, res) => {
+    const {emailClient} = req.body;
+
+    const mail = receiveMessage(emailClient);
     
+    try {
+        return res.status(200).json({ message: 'E-mail enviado com sucesso!', mail});
+    } 
+    catch (error){
+        if (error instanceof Error) {
+            return res.status(400).json({ message: 'E-mail não enviado!' });
+        }
+    }
 });
 
 module.exports = routes;
