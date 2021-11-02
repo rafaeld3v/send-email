@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const routes = require('./controllers/routes');
-
 const app = express();
 
 app.set('view engine', 'ejs');

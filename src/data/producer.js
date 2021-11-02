@@ -30,6 +30,8 @@ function sendMessage(numero, valor, data){
     }, 500);
 
   });
+
+  console.log('deu bom, passou pelo sendMessage', numero, valor, data);
 }
 
 module.exports = {sendMessage}

@@ -27,14 +27,16 @@ function sendEmail(emailClient, message){
         from: 'example.mail123212@gmail.com', 
         to: emailClient, 
         subject: 'Pedido realizado com sucesso!', 
-        html: message
+        text: ''
     };
-    
+
     // ENVIAR EMAIL
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(Object.assign(mailOptions, {html: message})), (error, info) => {
       if (error) console.log(error);
       else console.log(info);
-    });
+    }
+    
 }
+
 
 module.exports = {sendEmail}
