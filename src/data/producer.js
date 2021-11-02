@@ -5,7 +5,7 @@ function sendMessage(numero, valor, data){
 
     try{
       conn.createChannel(function(err, channel){
-        const queue = 'Trabalho AV2';
+        let queue = 'Trabalho AV2';
         
         let message = {
           numero: numero,

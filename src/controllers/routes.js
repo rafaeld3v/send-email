@@ -20,10 +20,9 @@ routes.post('/receiveMessage', function (req, res) {
     const {numero} = req.body;
     const {valor} = req.body;
     const {data} = req.body;
-
-    const pedido = sendMessage(parseInt(numero), parseFloat(valor), data);
     
     try {
+        const pedido = sendMessage(parseInt(numero), parseFloat(valor), data);
         return res.status(200).json({ message: 'Pedido cadastrado com sucesso!', pedido});
     } 
     catch (error){
@@ -38,12 +37,9 @@ routes.get('/sendEmail', (req, res) => res.render('email'));
 
 routes.post('/sendEmail', async (req, res) => {
     const {emailClient} = req.body;
-
-    const mail = receiveMessage(emailClient);
     
-    sendEmail();
-
     try {
+        const mail = receiveMessage(emailClient);
         return res.status(200).json({ message: 'E-mail enviado com sucesso!', mail});
     } 
     catch (error){
@@ -52,6 +48,5 @@ routes.post('/sendEmail', async (req, res) => {
         }
     }
 });
-
 
 module.exports = routes;

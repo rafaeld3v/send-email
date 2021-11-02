@@ -13,12 +13,13 @@ function receiveMessage(emailClient){
         
                 channel.consume(queue, function(message) {
                   let messagePedido = JSON.parse(message.content);
-              
-                  if((messagePedido.numero && messagePedido.valor && messagePedido.data) != undefined) {
-                    sendEmail(emailClient, `<p> O pedido de número ${messagePedido.numero} com o total de R$ ${messagePedido.valor} foi cadastrado com sucesso. O prazo de entrega será até o dia ${messagePedido.data}. </p>`)
+                  const msg = `<p> O pedido de número ${messagePedido.numero} com o total de R$ ${messagePedido.valor} foi cadastrado com sucesso. O prazo de entrega será até o dia ${messagePedido.data}. </p>`;
+
+                  if((messagePedido.numero && messagePedido.valor && messagePedido.data) != undefined){
+                    sendEmail(emailClient, msg);
                   } 
                   else{
-                    console.log("E-mail não enviado! Não há mensagem a ser enviada.")
+                    console.log("E-mail não enviado!")
                   }
                 }, {
                   noAck: true
