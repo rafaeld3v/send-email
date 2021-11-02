@@ -1,7 +1,7 @@
 const express = require('express');
 const {sendEmail} = require('../data/sendEmail');
-const {sendMessage} = require('../data/producer');
-const {receiveMessage} = require('../data/consumer');
+const {producerQueue}  = require('../data/producer');
+const {consumerQueue} = require('../data/consumer');
 const routes = express.Router();
 
 const text = {
@@ -22,11 +22,12 @@ routes.post('/receiveMessage', function (req, res) {
     const {data} = req.body;
     
     try {
-        const pedido = sendMessage(parseInt(numero), parseFloat(valor), data);
+        const pedido = producerQueue(parseInt(numero), parseFloat(valor), data);
         return res.status(200).json({ message: 'Pedido cadastrado com sucesso!', pedido});
     } 
     catch (error){
         if (error instanceof Error) {
+            console.error(error);
             return res.status(400).json({ message: 'Pedido não cadastrado!' });
         }
     }
@@ -39,11 +40,12 @@ routes.post('/sendEmail', async (req, res) => {
     const {emailClient} = req.body;
     
     try {
-        const mail = receiveMessage(emailClient);
+        const mail = consumerQueue(emailClient);
         return res.status(200).json({ message: 'E-mail enviado com sucesso!', mail});
     } 
     catch (error){
         if (error instanceof Error) {
+            console.error(error);
             return res.status(400).json({ message: 'E-mail não enviado!' });
         }
     }

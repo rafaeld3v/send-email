@@ -1,8 +1,8 @@
-const amqplib = require('amqplib/callback_api');
+const amqp = require('amqplib/callback_api');
 const {sendEmail} = require('./sendEmail');
 
-function receiveMessage(emailClient){
-    amqplib.connect(process.env.urlQueue, function(err, conn) {
+function consumerQueue(emailClient){
+  amqp.connect(process.env.urlQueue, function(err, conn) {
       if(err){
         console.error(err);
       }
@@ -14,10 +14,10 @@ function receiveMessage(emailClient){
           });
   
           channel.consume(queue, function(message) {
-            let messagePedido = JSON.parse(message.content);
-            const msg = `<p> O pedido de número ${messagePedido.numero} com o total de R$ ${messagePedido.valor} foi cadastrado com sucesso. O prazo de entrega será até o dia ${messagePedido.data}. </p>`;
+            let {numero, valor, data} = JSON.parse(message.content);
+            const msg = `<p> O pedido de número ${numero} com o total de R$ ${valor} foi cadastrado com sucesso. O prazo de entrega será até o dia ${data}. </p>`;
 
-            if((messagePedido.numero && messagePedido.valor && messagePedido.data) != undefined){
+            if((numero && valor && data) != undefined){
               sendEmail(emailClient, msg);
             } 
             else{
@@ -28,16 +28,9 @@ function receiveMessage(emailClient){
           })
       });
 
-        // try{
-
-        // }catch(err){
-        //   if (err instanceof Error) {
-        //     console.log(err);
-        //   }
-        // }
     });
 
     console.log('deu bom, passou pelo receiveMessage', emailClient);
 }
 
-module.exports = {receiveMessage}
+module.exports = {consumerQueue}
