@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/data/producer.js src/data/consumer.js src/data/sendEmail.js",
+    "test":"nodemon src/server.js src/data/producer.js src/data/consumer.js src/data/sendEmail.js"
   },
   "author": "",
   "license": "ISC",

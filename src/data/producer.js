@@ -1,30 +1,37 @@
 const amqp = require('amqplib/callback_api');
 
-function producerQueue(numero, valor, data){
-  amqp.connect('amqp://localhost:3001/', function(err, conn){
+function producerQueue(numero, valor, data, emailClient){
+  amqp.connect('amqp://guest:guest@localhost', function(err, conn){
     if(err){
       console.error(err);
     }
-    conn.createChannel(function(err, channel){
-      let queue = 'Trabalho AV2';
-      
-      let message = {
-        numero: numero,
-        valor: valor,
-        data: data
+    conn.createChannel((err, channel) => {
+      if(err){
+        console.error(err);
       }
-      channel.assertQueue(queue, {
-        durable: false
-      });
-      channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
+      try{
+        const queue = 'listen';
+        const message = {
+          numero: numero,
+          valor: valor,
+          data: data,
+          emailClient: emailClient
+        };
+        
+        channel.assertQueue(queue, { durable: false});
+        channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
+        
+        console.log('Message sent successfully', message);
+        // channel.sendToQueue(queue, Buffer.from(message));
 
-      console.log('Message sent successfully', message);
+        console.log(" [x] Sent %s", message);
+
+      }catch(err){
+        console.error(err);
+      }
     });
-
     setTimeout(function() { conn.close(); process.exit(0) }, 500);
   });
-
-  console.log('deu bom, passou pelo sendMessage', numero, valor, data);
 }
 
 module.exports = {producerQueue}
