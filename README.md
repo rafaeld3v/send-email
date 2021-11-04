@@ -38,15 +38,21 @@
 ## 👋 Equipe
 
 > Emanuelle Neves
+
 > Rafael Tavares
+
 > Dante Dantas
+
 > Matheus Rodrigues
+
 > João Monteiro
 
 ## 🏷️ Referências
 
 > https://www.rabbitmq.com/tutorials/tutorial-one-javascript.html
+
 > https://bradhick.medium.com/nodejs-enviando-emails-com-gmail-e-nodemailer-9606f0be4819
+
 > https://www.youtube.com/watch?v=uonKHztGhko
 
 ---
