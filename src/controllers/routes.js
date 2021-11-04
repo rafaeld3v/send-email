@@ -2,15 +2,15 @@ const express = require('express');
 const {producerQueue}  = require('../data/producer');
 const {consumer} = require('../data/consumer');
 
-// const {sendEmail} = require('../data/sendEmail');
-
 const routes = express.Router();
 
 const text = {
     text: 'Trabalho AV2',
     user1: 'Emanuelle Neves',
     user2: 'Rafael Tavares',
-    user4: 'Dante Dantas',
+    user3: 'Dante Dantas',
+    user4: 'Matheus Rodrigues',
+    user5: 'João Monteiro'
 }
 
 routes.get('/', (req, res) => res.send(text));
@@ -19,25 +19,21 @@ routes.get('/', (req, res) => res.send(text));
 // Envie um e-mail com no formato abaixo utilizando as informações coletadas;
 routes.get('/receiveMessage', (req, res) => res.render('pedido'));
 
-routes.post('/receiveMessage', function (req, res) {
+routes.post('/receiveMessage', function (req, res, error) {
     const {numero} = req.body;
     const {valor} = req.body;
     const {data} = req.body;
     const {emailClient} = req.body;
-   
-    
-    try {
-        const pedido = producerQueue(parseInt(numero), parseFloat(valor), data, emailClient);
-        return res.status(200).json({ message: 'Pedido cadastrado com sucesso!', pedido});
-    } 
-    catch (error){
-        if (error instanceof Error) {
-            console.error(error);
-            return res.status(400).json({ message: 'Pedido não cadastrado!' });
-        }
+
+    const pedido = producerQueue(parseInt(numero), parseFloat(valor), data); 
+    const mail = consumer(emailClient);
+
+    if (error instanceof Error) {
+        console.error(error);
+        return res.status(400).json({ message: 'Pedido não cadastrado!' });
     }
-    
-    consumer();
+
+    return res.status(200).json({ message: 'Pedido cadastrado com sucesso!', pedido, mail});
 });
 
 module.exports = routes;

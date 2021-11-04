@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/data/producer.js src/data/consumer.js src/data/sendEmail.js",
-    "test":"nodemon src/server.js src/data/producer.js src/data/consumer.js src/data/sendEmail.js"
+    "test":"nodemon src/server.js"
   },
   "author": "",
   "license": "ISC",

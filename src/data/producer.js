@@ -1,6 +1,6 @@
 const amqp = require('amqplib/callback_api');
 
-function producerQueue(numero, valor, data, emailClient){
+function producerQueue(numero, valor, data){
   amqp.connect('amqp://guest:guest@localhost', function(err, conn){
     if(err){
       console.error(err);
@@ -14,23 +14,21 @@ function producerQueue(numero, valor, data, emailClient){
         const message = {
           numero: numero,
           valor: valor,
-          data: data,
-          emailClient: emailClient
+          data: data
         };
         
         channel.assertQueue(queue, { durable: false});
         channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
         
         console.log('Message sent successfully', message);
-        // channel.sendToQueue(queue, Buffer.from(message));
-
+   
         console.log(" [x] Sent %s", message);
 
       }catch(err){
         console.error(err);
       }
     });
-    setTimeout(function() { conn.close(); process.exit(0) }, 500);
+    setTimeout(function() { conn.close(); process.exit(0) }, 5000);
   });
 }
 
