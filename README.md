@@ -32,7 +32,9 @@
 ## ⚡️ Como instalar e confiurar o RabbitMQ
 
 > Instalação do OTP 24.1 (https://www.erlang.org/downloads)
+
 > Instale o RabbitMQ (https://www.rabbitmq.com/install-windows.html)
+
 > Configure o Rabbit seguindo esse passo a passo (https://dev.senior.com.br/documentacao/instalacao-simplificada/2-instalando-o-rabbitmq/)
 
 ## 👋 Equipe
